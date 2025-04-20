@@ -40,11 +40,18 @@ Elle permet de naviguer entre différentes sections (accueil, menu, contact, etc
 ```bash
 git clone https://github.com/Berlal/O-Kyoto.git
 cd O-Kyoto
-2. Lancer avec Docker Compose
-bash
-Copier
-Modifier
+```
+
+### 2. Lancer avec Docker Compose
+
+```bash
 docker-compose up --build
-🔍 Aperçu du projet
-🌐 URL d'accès
-Frontend SPA : http://localhost:8081
+```
+
+---
+
+## 🔍 Aperçu du projet
+
+### 🌐 URL d'accès
+
+- Frontend SPA : [http://localhost:8081](http://localhost:8081)
