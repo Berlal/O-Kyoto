@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "8081:80"
+
+  service-home:
+    build: ./backend/service-home
+    ports:
+      - "3001:3000"
+
+  service-menu:
+    build: ./backend/service-menu
+    ports:
+      - "3002:3000"
+
+  service-contact:
+    build: ./backend/service-contact
+    ports:
+      - "3003:3000"

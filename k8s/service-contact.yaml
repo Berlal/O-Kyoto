@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-contact-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-contact
+  template:
+    metadata:
+      labels:
+        app: service-contact
+    spec:
+      containers:
+        - name: service-contact
+          image: service-contact-image
+          ports:
+            - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-contact-service
+spec:
+  selector:
+    app: service-contact
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: ClusterIP

@@ -1,0 +1,45 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push frontend
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/frontend-image ./frontend
+          docker push ${{ secrets.DOCKER_USERNAME }}/frontend-image
+
+      - name: Build and push microservices
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/service-home-image ./backend/service-home
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/service-menu-image ./backend/service-menu
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/service-contact-image ./backend/service-contact
+          docker push ${{ secrets.DOCKER_USERNAME }}/service-home-image
+          docker push ${{ secrets.DOCKER_USERNAME }}/service-menu-image
+          docker push ${{ secrets.DOCKER_USERNAME }}/service-contact-image
+
+      # Optionally deploy to Kubernetes cluster if configured
+      # - name: Set up kubectl
+      #   uses: azure/setup-kubectl@v3
+      #   with:
+      #     version: 'latest'
+
+      # - name: Deploy to Kubernetes
+      #   run: |
+      #     kubectl apply -f ./k8s
